@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Go Invoice</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="login.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/schema-validator.js"></script>
+  <script src="js/api-handler.js"></script>
+</head>
+
+<body>
+  <div class="login-container">
+    <!-- Left Section (Branding & Info) -->
+    <div class="left-section">
+      <div class="left-content-wrapper">
+        <div class="image-wrapper">
+          <img src="../images/invoologin.png" alt="GoInvoice Dashboard" class="dashboard-image">
+        </div>
+        <div class="text-wrapper">
+          <h1 class="main-heading">Smart Invoicing<br>for Modern<br>Growth.</h1>
+          <p class="sub-heading">Experience the power of automated billing with our product-first dashboard designed for
+            clarity.</p>
+        </div>
+        <div class="bottom-action">
+          <div class="accelerate-badge">
+            <i class="fa-solid fa-rocket"></i> Accelerate your workflow
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section (Login Form) -->
+    <div class="right-section">
+      <div class="form-container">
+
+        <div class="logo-area">
+          <div class="logo-icon"><i class="fa-solid fa-file-invoice"></i></div>
+          <h2 class="brand-name">Go Invoice</h2>
+          <p class="form-title">Login to Your Account</p>
+        </div>
+
+        <form class="login-form" id="loginForm" method="post" novalidate>
+          <div class="input-group-custom">
+            <label for="email">Email Address</label>
+            <div class="input-with-icon">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="email" name="email" placeholder="Enter your email" required />
+            </div>
+          </div>
+
+          <div class="input-group-custom">
+            <label for="password">Password <a href="#" class="forgot-link">Forgot password?</a></label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="password" name="password" placeholder="Enter your password" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-custom" id="submitBtn">Login</button>
+
+          <div class="divider">
+            <span>OR</span>
+          </div>
+
+          <a href="singup.html" class="btn-secondary-custom">Create New Account</a>
+        </form>
+
+        <div id="message" style="margin: 15px 0; text-align: center; font-size: 14px;"></div>
+
+        <div class="back-link-wrapper">
+          <a href="" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to GoInvoice.com</a>
+        </div>
+
+        <footer>
+          <p>COPYRIGHT &copy; <span id="copyYear">2025</span> GO INVOICE - BEST GST BILLING SOFTWARE.<br>ALL RIGHTS
+            RESERVED.</p>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Set dynamic year in footer
+      const yEl = document.getElementById('copyYear');
+      if (yEl) { yEl.textContent = new Date().getFullYear(); }
+
+      // Clean accidental GET query params
+      if (window.location.search) {
+        history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      // Normalize links and image when using VS Code Live Server so PHP runs on XAMPP
+      const isLiveServer = /^(127\.0\.0\.1|localhost):55\d{2}$/.test(window.location.host);
+      if (isLiveServer) {
+        const signup = document.querySelector('a.btn-secondary-custom');
+        if (signup) signup.href = 'http://localhost/sem5goinvoice/project%201/front/singup.html';
+        const back = document.querySelector('a.back-link');
+        if (back) back.href = 'http://localhost/sem5goinvoice/project%201/front/main.html';
+        const img = document.querySelector('img.dashboard-image');
+        if (img) img.src = 'http://localhost/sem5goinvoice/project%201/images/invoologin.png';
+      }
+
+      const form = document.getElementById('loginForm');
+      const messageDiv = document.getElementById('message');
+      const validator = new FormValidator();
+      const schemaValidator = new SchemaValidator();
+      let submitting = false;
+
+      // If already logged in (valid session), go directly to dashboard
+      apiHandler.checkSession().then((sess) => {
+        if (sess && sess.logged_in) {
+          const isLive = /^(127\.0\.0\.1|localhost):55\d{2}$/.test(window.location.host);
+          const xamppUrl = 'http://localhost/sem5goinvoice/project%201/view/dashbord.php';
+          window.location.replace(isLive ? xamppUrl : '../view/dashbord.php');
+        }
+      }).catch(() => { });
+
+      validator.setupRealTimeValidation(form);
+
+      // Form submission handler (guarded to prevent double submit)
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (submitting) { return; }
+        submitting = true;
+        // Clear previous messages
+        messageDiv.textContent = '';
+        messageDiv.className = '';
+        // Validate form
+        const { isValid, formData } = validator.validateForm(form);
+        if (!isValid) {
+          showMessage('Please fix the errors above', 'error');
+          submitting = false;
+          return;
+        }
+
+        // ADMIN LOGIN REDIRECTION
+        const email = (formData.email || '').trim();
+        const password = formData.password;
+
+        if (email === 'admin@gmail.com') { // Check specifically for admin email
+          const submitBtn = document.getElementById('submitBtn');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Verifying Admin...';
+
+          try {
+            const response = await fetch('../admin/login.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
+            const result = await response.json();
+
+            if (result.success) {
+              showMessage('Admin Login successful! Redirecting...', 'success');
+              setTimeout(() => {
+                window.location.href = result.redirect || '../admin/index.php';
+              }, 800);
+              return;
+            } else {
+              showMessage(result.error || 'Admin login failed', 'error');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Login';
+              return;
+            }
+          } catch (err) {
+            showMessage('Connection error during admin login', 'error');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Login';
+            return;
+          }
+        }
+
+        // Schema validation
+        const schemaResult = await schemaValidator.validateAndSanitize(formData, 'login');
+        if (!schemaResult.valid) {
+          showMessage('Validation failed: ' + schemaResult.errors.join(', '), 'error');
+          submitting = false;
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in...';
+
+        try {
+          // Use API handler with offline support
+          const result = await offlineHandler.queueRequest(() =>
+            apiHandler.login({
+              email: email,
+              password: password
+            })
+          );
+          if (result.success) {
+            showMessage('Login successful! Redirecting...', 'success');
+            try {
+              if (result.data) {
+                localStorage.setItem('goinvoice_user', JSON.stringify(result.data));
+              }
+            } catch (_) { }
+            setTimeout(() => {
+              const isLive = /^(127\.0\.0\.1|localhost):55\d{2}$/.test(window.location.host);
+              const xamppUrl = 'http://localhost/sem5goinvoice/project%201/view/dashbord.php';
+              window.location.href = isLive ? xamppUrl : '../view/dashbord.php';
+            }, 800);
+          } else {
+            showMessage(result.error || 'Login failed', 'error');
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          showMessage(error.message || 'Login failed. Please try again.', 'error');
+        } finally {
+          // Reset button state
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitting = false;
+        }
+      });
+
+      function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.style.color = type === 'success' ? '#1dc071' : '#dc3545';
+        messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} mt-3`;
+        if (type === 'success') {
+          setTimeout(() => {
+            messageDiv.textContent = '';
+            messageDiv.className = '';
+          }, 5000);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

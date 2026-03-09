@@ -1,0 +1,108 @@
+[2026-02-21 09:32:02] TO: s@gmail.com | SUB: Payment Pending - Invoice #INV1013
+BODY: Hello sujal,
+
+This is a friendly reminder that your payment for invoice #INV1013 is still pending. 
+
+Outstanding Balance: ₹153400.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+karan
+---------------------------------
+[2026-02-21 11:56:26] TO: kishan@gmail.com | SUB: Payment Pending - Invoice #INV1001
+BODY: Hello kishan bhai,
+
+This is a friendly reminder that your payment for invoice #INV1001 is still pending. 
+
+Outstanding Balance: ₹98.10
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+man
+---------------------------------
+[2026-02-22 12:07:41] TO: s@gmail.com | SUB: Payment Pending - Invoice #INV1013
+BODY: Hello sujal,
+
+This is a friendly reminder that your payment for invoice #INV1013 is still pending. 
+
+Outstanding Balance: ₹153400.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+karan
+---------------------------------
+[2026-02-25 11:08:34] TO: s@gmail.com | SUB: Payment Pending - Invoice #INV1013
+BODY: Hello sujal,
+
+This is a friendly reminder that your payment for invoice #INV1013 is still pending. 
+
+Outstanding Balance: ₹153400.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+karan
+---------------------------------
+[2026-02-25 11:58:49] TO: s@gmail.com | SUB: Payment Pending - Invoice #INV1013
+BODY: Hello sujal,
+
+This is a friendly reminder that your payment for invoice #INV1013 is still pending. 
+
+Outstanding Balance: ₹153400.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+karan
+---------------------------------
+[2026-02-26 06:49:58] TO: deep@gmail.com | SUB: Payment Pending - Invoice #INV1001
+BODY: Hello deep patel,
+
+This is a friendly reminder that your payment for invoice #INV1001 is still pending. 
+
+Outstanding Balance: ₹41300.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+man
+---------------------------------
+[2026-02-26 06:50:15] TO: deep@gmail.com | SUB: Payment Pending - Invoice #INV1001
+BODY: Hello deep patel,
+
+This is a friendly reminder that your payment for invoice #INV1001 is still pending. 
+
+Outstanding Balance: ₹41300.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+man
+---------------------------------
+[2026-02-26 06:55:52] TO: deep@gmail.com | SUB: Payment Pending - Invoice #INV1001
+BODY: Hello deep patel,
+
+This is a friendly reminder that your payment for invoice #INV1001 is still pending. 
+
+Outstanding Balance: ₹41300.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+man
+---------------------------------
+[2026-02-26 06:56:25] TO: deep@gmail.com | SUB: Payment Pending - Invoice #INV1001
+BODY: Hello deep patel,
+
+This is a friendly reminder that your payment for invoice #INV1001 is still pending. 
+
+Outstanding Balance: ₹41300.00
+
+Please settle the payment at your earliest convenience.
+
+Thank you,
+man
+---------------------------------

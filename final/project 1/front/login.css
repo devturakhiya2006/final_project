@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* LEFT SECTION (BRANDING - GREEN) */
+.left-section {
+  flex: 1;
+  background-color: #0f9b73;
+  /* Match the screenshot green */
+  background: linear-gradient(135deg, #11b181, #0c805f);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.left-content-wrapper {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Center everything */
+  text-align: center;
+  z-index: 2;
+}
+
+.image-wrapper {
+  width: 100%;
+  max-width: 380px;
+  /* Keep image contained */
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+}
+
+.text-wrapper {
+  margin-bottom: 3rem;
+}
+
+.main-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.sub-heading {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #e0f2f1;
+  font-weight: 400;
+  padding: 0 1rem;
+}
+
+.bottom-action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  /* Align left as per typical dashboard UI, or center */
+}
+
+/* Keep the badge at the bottom left-ish */
+.accelerate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.accelerate-badge:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* RIGHT SECTION (FORM - WHITE) */
+.right-section {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-container {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-area {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo-icon {
+  background-color: #11b181;
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 20px rgba(17, 177, 129, 0.2);
+}
+
+.brand-name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1e23;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.form-title {
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input-group-custom {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group-custom label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-link {
+  color: #11b181;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: #0c805f;
+  text-decoration: underline;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+}
+
+.input-with-icon input:focus {
+  border-color: #11b181;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(17, 177, 129, 0.1);
+}
+
+.input-with-icon input::placeholder {
+  color: #cbd5e1;
+}
+
+/* BUTTONS */
+.btn-primary-custom {
+  background-color: #11b181;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(17, 177, 129, 0.2);
+}
+
+.btn-primary-custom:hover {
+  background-color: #0c805f;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(17, 177, 129, 0.3);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.btn-secondary-custom {
+  background-color: #3b82f6;
+  /* Blue tint */
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.btn-secondary-custom:hover {
+  background-color: #2563eb;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+}
+
+/* FOOTER AND LINKS */
+.back-link-wrapper {
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  color: #11b181;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-link:hover {
+  color: #0c805f;
+}
+
+footer {
+  text-align: center;
+  margin-top: auto;
+}
+
+footer p {
+  color: #94a3b8;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 3rem 2rem;
+  }
+
+  .image-wrapper {
+    max-width: 280px;
+  }
+
+  .main-heading {
+    font-size: 2rem;
+  }
+}

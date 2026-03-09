@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singup</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="singup.css" />
+  <script src="js/validation.js"></script>
+  <script src="js/api-handler.js"></script>
+  <script src="js/schema-validator.js"></script>
+
+<body>
+
+  <div class="container">
+    <div class="left-section">
+      <img src="../images/invoologin.png" alt="Dashboard" class="dashboard-image">
+    </div>
+    <div class="right-section">
+      <h1>Go Invoice</h1>
+      <h2>Create Your Free Account</h2>
+      <form class="form" id="signupForm">
+        <input type="text" id="name" name="name" placeholder="Name" required />
+        <input type="text" id="business_name" name="business_name" placeholder="Business Name" required />
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input type="tel" id="mobile" name="mobile" placeholder="Mobile No" required />
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
+        <button type="submit" class="send-otp">Signup</button>
+        <a class="login" href="login.html">Have Account? Login</a>
+      </form>
+      <div id="message" style="margin-top: 10px; color: red;"></div>
+      <p class="terms">
+        By clicking Get Started, you agree to our <a href="#">Terms</a> and acknowledge our <a href="#">Privacy
+          Policy</a>.
+      </p>
+      <a href="main.html" class="back-link">← Back to GoInvoice.Com</a>
+      <footer>
+        <p>Copyright © 2025 Go Invoice - Best GST Billing Software. All rights reserved.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('signupForm');
+      const messageDiv = document.getElementById('message');
+
+      // Initialize validation
+      const validator = new FormValidator();
+      const schemaValidator = new SchemaValidator();
+
+      // Setup real-time validation
+      validator.setupRealTimeValidation(form);
+
+      // Form submission handler (validation disabled per request)
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Clear previous messages
+        messageDiv.textContent = '';
+        messageDiv.className = '';
+
+        // Build payload directly (no client-side validation)
+        const raw = {
+          name: form.querySelector('#name')?.value || '',
+          business_name: form.querySelector('#business_name')?.value || '',
+          email: form.querySelector('#email')?.value || '',
+          mobile: form.querySelector('#mobile')?.value || '',
+          password: form.querySelector('#password')?.value || ''
+        };
+        // Normalize mobile to last 10 digits to match backend expectations
+        const digits = (raw.mobile || '').replace(/\D/g, '');
+        raw.mobile = digits.length >= 10 ? digits.slice(-10) : digits;
+
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating Account...';
+
+        try {
+          // Use API handler with offline support
+          const result = await offlineHandler.queueRequest(() =>
+            apiHandler.signup(raw)
+          );
+
+          if (result.success) {
+            // Do not auto-login. Ask user to login manually.
+            showMessage('Registration successful! Please login to continue.', 'success');
+            setTimeout(() => {
+              // Keep same origin as backend to avoid cookie loss between 127.0.0.1 and localhost
+              var isLiveServer = /^(127\.0\.0\.1|localhost):55\d{2}$/.test(window.location.host);
+              var xamppLogin = 'http://localhost/sem5goinvoice/project%201/front/login.html';
+              window.location.href = isLiveServer ? xamppLogin : 'login.html';
+            }, 1200);
+            return;
+          } else {
+            showMessage(result.error || 'Registration failed', 'error');
+          }
+        } catch (error) {
+          console.error('Signup error:', error);
+          showMessage(error.message || 'Registration failed. Please try again.', 'error');
+        } finally {
+          // Reset button state
+          submitBtn.disabled = false;
+        }
+      });
+
+      function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.style.color = type === 'success' ? 'green' : 'red';
+        messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'}`;
+
+        // Auto-hide success messages
+        if (type === 'success') {
+          setTimeout(() => {
+            messageDiv.textContent = '';
+            messageDiv.className = '';
+          }, 5000);
+        }
+      }
+    });
+
+    // Normalize the Login link when running via Live Server to point to XAMPP path
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        var isLiveServer = /^(127\.0\.0\.1|localhost):55\d{2}$/.test(window.location.host);
+        if (isLiveServer) {
+          var loginAnchor = document.querySelector('a.login');
+          if (loginAnchor) {
+            loginAnchor.href = 'http://localhost/sem5goinvoice/project%201/front/login.html';
+          }
+        }
+      } catch (_) { }
+    });
+  </script>
+</body>
+
+</html>
